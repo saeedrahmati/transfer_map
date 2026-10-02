@@ -922,7 +922,7 @@
         {
           attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">' +
-            "OpenStreetMap</a> contributors",
+            "OpenStreetMap</a> | OSM",
 
           minZoom: 2,
           maxZoom: 19,
@@ -1525,7 +1525,7 @@
       try {
         map = L.map("map", {
           minZoom: 7,
-          maxZoom: 23
+          maxZoom: 11
         }).setView([35.7, 58.5], 7);
 
         // راهنمای رنگ‌ها
