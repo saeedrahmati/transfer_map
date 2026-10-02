@@ -1,0 +1,557 @@
+    @font-face {
+      font-family: "Samim";
+      src: url("../fonts/samim-font-v2.0.1/Samim-Bold.woff2") format("woff2");
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --app-font: "Samim", Tahoma, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #eeeec7;
+      color: #172033;
+      font-family: var(--app-font);
+      direction: rtl;
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(1600px, 96%);
+      margin: 24px auto;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h2 {
+      font-size: 19px;
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 18px 0;
+      border: 1px solid #e1e5eb;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #00000008;
+    }
+
+    /* کادر اصلی: متن سمت راست و تصاویر سمت چپ */
+    .card1 {
+      direction: rtl;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      width: 100%;
+      max-width: none;
+      margin-inline: 0;
+      padding: 15px 0;
+      box-sizing: border-box;
+    }
+
+    /* اولین div داخل card1: بخش متن */
+    .card1>div:first-child {
+      flex: 1;
+      min-width: 0;
+      text-align: right;
+    }
+
+    .card1 h1 {
+      margin: 0 0 10px;
+      line-height: 1.8;
+    }
+
+    .card1 .muted {
+      margin: 0;
+      text-align: right;
+      line-height: 2;
+    }
+
+    /* دومین div داخل card1: بخش تصاویر */
+    .card1>div:last-child {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-shrink: 0;
+    }
+
+    .card1>div:last-child img {
+      display: block;
+      object-fit: contain;
+    }
+
+    /* نمایش مناسب در موبایل */
+    @media (max-width: 700px) {
+      .card1 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .card1>div:last-child {
+        align-self: flex-end;
+      }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      margin-top: 7px;
+      padding: 10px;
+      font: inherit;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      background: white;
+    }
+
+    input[type="text"],
+    input[type="search"],
+    select {
+      direction: rtl;
+      text-align: right;
+    }
+
+    input[type="file"] {
+      font-size: 13px;
+    }
+
+    button {
+      width: auto;
+      cursor: pointer;
+      color: white;
+      background: #2563eb;
+      border: 0;
+      padding: 10px 18px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      background: #475569;
+      font-size: 12px;
+    }
+
+    .secondary:hover {
+      background: #334155;
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .message {
+      margin-top: 12px;
+      padding: 11px 14px;
+      border-radius: 7px;
+      background: #eaf2ff;
+      color: #173566;
+      white-space: pre-line;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      background: #feecec;
+      color: #9b1c1c;
+    }
+
+    .message.success {
+      background: #e8f7ee;
+      color: #176239;
+    }
+
+    .muted {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      max-height: 460px;
+      overflow: auto;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: right;
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #f1f5f9;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    td {
+      min-width: 120px;
+      max-width: 420px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    td.row-number {
+      min-width: 60px;
+    }
+
+    td.issue-cell {
+      min-width: 230px;
+      color: #9b1c1c;
+      background: #fff7f7;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    #map {
+      height: 580px;
+      width: 100%;
+      margin-top: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      direction: ltr;
+      background: #edf1f5;
+    }
+
+    .leaflet-tooltip {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--app-font);
+    }
+
+    .county-label-icon {
+      background: transparent;
+      border: 0;
+      pointer-events: none;
+    }
+
+    .county-label-text {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: max-content;
+      max-width: 160px;
+      padding: 3px 6px;
+      color: #111827;
+      /* font: bold 10px Tahoma, Arial, sans-serif; */
+      font-family: var(--app-font);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.6;
+      text-align: center;
+      direction: rtl;
+      white-space: normal;
+      pointer-events: none;
+      text-shadow:
+        1px 1px 2px white,
+        -1px -1px 2px white;
+    }
+
+    .legend {
+      background: white;
+      padding: 10px 12px;
+      border: 1px solid #777;
+      border-radius: 7px;
+      box-shadow: 0 2px 8px #0002;
+      /* font: 12px Tahoma, Arial, sans-serif; */
+      font-family: var(--app-font);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.8;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .legend-bar {
+      width: 155px;
+      height: 14px;
+      margin-top: 9px;
+      border: 1px solid #999;
+      background: linear-gradient(to right, #fff7bc, #fec44f, #f03b20, #bd0026);
+    }
+
+    .legend-zero {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background: #d1d5db;
+      border: 1px solid #999;
+      vertical-align: middle;
+    }
+
+    .map-tools {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .map-tools label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map-tools input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    /* کنترل نقشه پایه داخل نقشه */
+    .leaflet-control-layers {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--app-font);
+      font-size: 12px;
+      line-height: 1.9;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #0002;
+    }
+
+    .leaflet-control-layers-expanded {
+      padding: 10px 12px;
+      max-width: calc(100vw - 90px);
+    }
+
+    .leaflet-control-layers-list {
+      margin: 0;
+    }
+
+    .leaflet-control-layers label {
+      display: block;
+      margin: 5px 0;
+      font-size: 12px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    .leaflet-control-layers input.leaflet-control-layers-selector {
+      width: auto;
+      margin: 0 0 0 6px;
+      padding: 0;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+
+    .leaflet-control-layers label span {
+      vertical-align: middle;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .stat {
+      padding: 7px 12px;
+      background: #f1f5f9;
+      border-radius: 7px;
+      font-size: 13px;
+    }
+
+    .stat.warning {
+      color: #9b1c1c;
+      background: #fff0f0;
+    }
+
+    #selectedSection {
+      scroll-margin-top: 16px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+
+      .grid,
+      .grid.two {
+        grid-template-columns: 1fr;
+      }
+
+      #map {
+        height: 460px;
+      }
+
+      h1 {
+        font-size: 21px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+    }
+
+    .site-footer {
+      direction: rtl;
+      margin-top: 40px;
+      font-family: "Samim", sans-serif;
+      color: #475569;
+      background: linear-gradient(135deg, #f8fafc, #eef2f7);
+      border-top: 1px solid #e2e8f0;
+      position: relative;
+    }
+
+    /* خط رنگی بالای فوتر */
+    .site-footer::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      right: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(to left,
+          #2563eb,
+          #06b6d4,
+          transparent);
+    }
+
+    .site-footer__inner {
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 28px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .site-footer__brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .site-footer__title {
+      color: #1e293b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .site-footer__subtitle {
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .site-footer__credit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .site-footer__label {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .site-footer__name {
+      padding: 7px 14px;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* نمایش در موبایل */
+    @media (max-width: 600px) {
+      .site-footer__inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 18px;
+        padding: 22px 16px;
+      }
+
+      .site-footer__credit {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+
+
+
+    /* فونت ورودی‌ها، دکمه‌ها و جدول‌ها */
+    input,
+    select,
+    button,
+    textarea,
+    table {
+      font-family: var(--app-font);
+    }
+
+    /* فونت اجزای نقشه */
+    .leaflet-container,
+    .leaflet-tooltip,
+    .leaflet-popup-content,
+    .leaflet-control-layers,
+    .leaflet-control-attribution,
+    .county-label-text,
+    .legend {
+      font-family: var(--app-font);
+    }

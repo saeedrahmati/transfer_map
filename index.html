@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> نقشه درخواست‌های انتقال کارکنان</title>
+  <link rel="icon" type="image/png" href="./image/logo.jpeg">
+  <link rel="stylesheet" href="./css/leaflet.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <main class="container">
+    <div class="card1">
+      <div>
+        <h1> نقشه درخواست‌های انتقال کارکنان شرکت توزیع نیروی برق خراسان رضوی</h1>
+
+      </div>
+      <div style="text-align: left;">
+        <img style="width: 150px;height: 50px;" src="./image/baham.png" alt="">
+        <img style="width: 100px;height: 120px;" src="./image/KEDC.PNG" alt="">
+      </div>
+    </div>
+
+
+    <!-- بخش اول: بارگذاری فایل‌ها -->
+    <section class="card">
+      <h2>بارگذاری فایل‌ها</h2>
+      <p class="muted">
+        ابتدا
+        <span style="font-size: 15px;color: black;">داده نقشه</span>
+        و
+        <span style="font-size: 15px;color: black;">اطلاعات جابجایی کارکنان</span>
+        را انتخاب کنید سپس با زدن دکمه
+        <span style="color: blue;font-size: 15px;">بارگذاری و نمایش نقشه</span>
+        اطلاعات نمایش داده خواهد شد.
+      </p><br>
+
+      <div class="grid two">
+        <label>
+          فایل ZIP شیپ‌فایل شهرستان‌ها
+          <input id="shapeFile" type="file" accept=".zip">
+        </label>
+
+        <label>
+          فایل اکسل اطلاعات پرسنلی
+          <input id="excelFile" type="file" accept=".xlsx,.xls">
+        </label>
+      </div>
+
+      <p class="muted">
+        فایل‌های SHP، SHX، DBF و PRJ را داخل ZIP قرار دهید.
+        برای نمایش صحیح نام‌های فارسی، وجود فایل CPG با
+        encoding صحیح توصیه می‌شود.
+        اطلاعات اکسل از اولین شیت خوانده می‌شود.
+      </p>
+
+      <div class="actions">
+        <button id="loadButton" type="button">
+          بارگذاری و نمایش نقشه
+        </button>
+      </div>
+
+      <div id="message" class="message" role="status">
+        فایل ZIP شیپ‌فایل و فایل اکسل را انتخاب کنید.
+      </div>
+    </section>
+
+    <!-- بخش دوم: جستجو -->
+    <section class="card">
+      <h2>جستجو در اطلاعات پرسنلی</h2>
+
+      <p class="muted">
+        همه جستجوها هم‌زمان اعمال می‌شوند.
+        در فیلدهای متنی می‌توانید بخشی از عبارت را وارد کنید.
+      </p>
+
+      <div class="grid">
+        <label>
+          کد پرسنلی
+          <input id="searchPersonnel" type="search" placeholder="کد یا بخشی از کد پرسنلی">
+        </label>
+
+        <label>
+          نام و نام خانوادگی
+          <input id="searchName" type="search" placeholder="نام یا نام خانوادگی">
+        </label>
+
+        <label>
+          نوع درخواست
+          <input id="searchRequest" type="search" list="requestOptions" placeholder="نوع درخواست">
+          <datalist id="requestOptions"></datalist>
+        </label>
+
+        <label>
+          مبدا
+          <input id="searchOrigin" type="search" list="originOptions" placeholder="محل فعلی پرسنل">
+          <datalist id="originOptions"></datalist>
+        </label>
+
+        <label>
+          رشته شغلی
+          <input id="searchJob" type="search" list="jobOptions" placeholder="رشته شغلی">
+          <datalist id="jobOptions"></datalist>
+        </label>
+
+        <label>
+          پست سازمانی اجرایی
+          <input id="searchExecutive" type="search" list="executiveOptions" placeholder="پست سازمانی اجرایی">
+          <datalist id="executiveOptions"></datalist>
+        </label>
+
+        <label>
+          پست سازمانی مصوب
+          <input id="searchApproved" type="search" list="approvedOptions" placeholder="پست سازمانی مصوب">
+          <datalist id="approvedOptions"></datalist>
+        </label>
+
+        <label>
+          معاونت
+          <select id="filterDeputy">
+            <option value="">همه معاونت‌ها</option>
+          </select>
+        </label>
+
+        <label>
+          اولویت
+          <select id="filterPriority">
+            <option value="">همه اولویت‌ها</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button id="resetFilters" class="secondary" type="button">
+          پاک‌کردن جستجوها
+        </button>
+      </div>
+    </section>
+
+    <!-- بخش سوم: نتایج کلی جستجو -->
+    <section class="card">
+      <h2>نتایج جستجو</h2>
+
+      <div id="allCount">تعداد ردیف‌ها: ۰</div>
+
+      <div id="allResults" class="muted">
+        ابتدا فایل‌ها را بارگذاری کنید.
+      </div>
+    </section>
+
+    <!-- بخش چهارم: نقشه -->
+    <section class="card">
+      <h2>
+        نقشه شهرستان‌های مقصد
+      </h2>
+
+      <p class="muted">
+        رنگ شهرستان‌ها تعداد درخواست‌ها به آن مقصد را،
+        با درنظرگرفتن جستجوهای فعلی، نشان می‌دهد.
+        برای مشاهده متقاضیان روی شهرستان کلیک کنید.
+      </p>
+
+      <div class="map-tools">
+        <label>
+          <input id="showLabels" type="checkbox" checked>
+          نمایش نام و تعداد درخواست شهرستان‌ها
+        </label>
+
+        <button id="zoomRegions" class="secondary" type="button">
+          نمایش محدوده شهرستان‌ها
+        </button>
+      </div>
+
+      <div id="map"></div>
+
+      <p id="mapCaption" class="muted">
+        خاکستری: بدون درخواست |
+        زرد تا قرمز: درخواست کمتر تا بیشتر
+      </p>
+
+      <p id="baseMapStatus" class="muted" role="status"></p>
+    </section>
+
+    <!-- بخش پنجم: نتایج شهرستان، مستقیماً زیر نقشه -->
+    <section id="selectedSection" class="card">
+      <h2 id="selectedTitle">
+        متقاضیان انتقال به شهرستان انتخاب‌شده
+      </h2>
+
+      <div class="actions">
+        <button id="clearSelection" class="secondary" type="button" hidden>
+          لغو انتخاب شهرستان
+        </button>
+      </div>
+
+      <p id="selectedCount"></p>
+
+      <div id="selectedResults" class="muted">
+        برای مشاهده متقاضیان، روی یک شهرستان کلیک کنید.
+      </div>
+    </section>
+
+    <!-- بخش آخر: عدم تطبیق -->
+    <section class="card">
+      <h2>بررسی عدم تطبیق مبدا و مقصد</h2>
+
+      <p class="muted">
+        هر ردیف که مبدا یا حداقل یکی از مقصدهای آن با نام
+        شهرستان‌های شیپ‌فایل تطبیق نداشته باشد، در این جدول
+        با تمام اطلاعات اکسل نمایش داده می‌شود.
+        مبدا یا مقصد خالی نیز عدم تطبیق محسوب می‌شود.
+      </p>
+
+      <p class="muted">
+        جداکننده‌های مقصد:
+        ویرگول فارسی و انگلیسی، نقطه‌ویرگول فارسی و انگلیسی،
+        اسلش، خط جدید، خط تیره و زیرخط.
+      </p>
+      <p class="muted">
+        فاصله و حرف «و» جداکننده نیستند.
+        توضیحات داخل پرانتز به‌صورت خودکار حذف نمی‌شوند.
+      </p>
+
+      <div class="stats">
+        <span id="unmatchedCount" class="stat warning">
+          ردیف‌های دارای عدم تطبیق: ۰
+        </span>
+
+        <span id="originMismatchCount" class="stat">
+          مبدا نامنطبق: ۰
+        </span>
+
+        <span id="destinationMismatchCount" class="stat">
+          مقصد نامنطبق: ۰
+        </span>
+      </div>
+
+      <div id="unmatchedResults" class="muted">
+        ابتدا فایل‌ها را بارگذاری کنید.
+      </div>
+
+    </section>
+  </main>
+  <footer class="site-footer" aria-label="اطلاعات طراح سامانه">
+    <div class="site-footer__inner">
+
+      <div class="site-footer__brand">
+        <span class="site-footer__title">
+          وب اپلیکیشن نمایش مکان محور درخواست‌های انتقال کارکنان شرکت توزیع نیروی برق خراسان رضوی
+        </span>
+        <span class="site-footer__subtitle"></span>
+      </div>
+
+      <div class="site-footer__credit">
+        <span class="site-footer__label">طراحی و توسعه</span>
+        <strong class="site-footer__name">سعید رحمتی</strong>
+      </div>
+
+    </div>
+  </footer>
+  <script src="./js/leaflet.js"></script>
+  <script src="./js/xlsx.full.min.js"></script>
+  <script src="./js/shp.min.js"></script>
+  <script src="./js/diran.js"></script>
+
+</body>
+
+</html>
